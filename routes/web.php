@@ -18,3 +18,4 @@ Route::prefix('resep-draft')->name('resep.draft.')->group(function () {
 
 Route::post('/resep', [ResepController::class, 'store'])->name('resep.store');
 Route::get('/resep/{resep}', [ResepController::class, 'show'])->name('resep.show');
+Route::get('/resep/{resep}/cetak', [ResepController::class, 'printPdf'])->name('resep.print');

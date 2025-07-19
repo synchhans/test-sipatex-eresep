@@ -6,6 +6,7 @@ use App\Models\ObatAlkes;
 use App\Models\Resep;
 use App\Models\ResepItem;
 use App\Models\ResepRacikanItem;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -240,5 +241,12 @@ class ResepController extends Controller
     {
         $resep->load('items.obat', 'items.signa', 'items.racikanItems.obat');
         return view('prescriptions.show', ['resep' => $resep]);
+    }
+
+    public function printPdf(Resep $resep)
+    {
+        $resep->load('items.obat', 'items.signa', 'items.racikanItems.obat');
+        $pdf = Pdf::loadView('prescriptions.pdf', ['resep' => $resep]);
+        return $pdf->stream('resep-' . $resep->nomor_resep . '.pdf');
     }
 }
