@@ -15,3 +15,5 @@ Route::prefix('resep-draft')->name('resep.draft.')->group(function () {
     Route::post('/tambah-racikan', [ResepController::class, 'tambahRacikan'])->name('tambahRacikan');
     Route::get('/hapus/{uuid}', [ResepController::class, 'hapusItem'])->name('hapusItem');
 });
+
+Route::post('/resep', [ResepController::class, 'store'])->name('resep.store');

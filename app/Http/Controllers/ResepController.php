@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ObatAlkes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -123,4 +124,42 @@ class ResepController extends Controller
 
         return redirect()->route('resep.buat')->with('success', 'Item berhasil dihapus dari draft.');
     }
+
+    // helper
+    private function calculateUsedStock(array $draftItems): array
+    {
+        $usedStock = [];
+        foreach ($draftItems as $item) {
+            if ($item['jenis'] === 'non_racikan') {
+                $obatId = $item['obatalkes_id'];
+                $usedStock[$obatId] = ($usedStock[$obatId] ?? 0) + $item['jumlah'];
+            } else if ($item['jenis'] === 'racikan') {
+                foreach ($item['komponen'] as $comp) {
+                    $obatId = $comp['obatalkes_id'];
+                    $usedStock[$obatId] = ($usedStock[$obatId] ?? 0) + ($comp['jumlah'] * $item['jumlah_racikan']);
+                }
+            }
+        }
+        return $usedStock;
+    }
+
+    private function isStockSufficient(Request $request, array $newItems): bool
+    {
+        $draftItems = $request->session()->get('resep.items', []);
+        $allItems = array_merge($draftItems, $newItems);
+        $usedStock = $this->calculateUsedStock($allItems);
+
+        $obatIds = array_keys($usedStock);
+        if (empty($obatIds)) return true;
+
+        $dbStocks = ObatAlkes::whereIn('obatalkes_id', $obatIds)->pluck('stok', 'obatalkes_id');
+
+        foreach ($usedStock as $obatId => $needed) {
+            if ($needed > ($dbStocks[$obatId] ?? 0)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    // helper end
 }
