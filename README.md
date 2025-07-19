@@ -1,61 +1,127 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# E-Prescription - Sipatex Developer Assignment
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi E-Prescription sederhana ini dibangun sebagai bagian dari _developer assignment_ untuk Sipatex. Aplikasi ini memungkinkan pengguna (seperti dokter atau apoteker) untuk mencatat resep obat digital, baik dalam bentuk non-racikan maupun racikan, dengan manajemen stok yang terintegrasi.
 
-## About Laravel
+Aplikasi ini dikembangkan menggunakan **PHP 8.2** dan **Laravel 12**, dengan antarmuka yang responsif dibangun menggunakan **TailwindCSS**. Interaktivitas ditingkatkan dengan sedikit JavaScript, dan fitur pencarian canggih untuk data obat/signa yang besar dioptimalkan menggunakan library **Choices.js**.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   **Formulir Resep Dinamis**: Mudah beralih antara input obat **Non-Racikan** dan **Racikan**.
+-   **Manajemen Draft**: Susun resep secara bertahap dalam _draft_ yang disimpan di sisi server (Session). Item dapat dihapus satu per satu dari draft.
+-   **Pencarian Cepat & Performa Tinggi**: Dropdown untuk memilih **Obat** dan **Signa** (aturan pakai) menggunakan pencarian via API, memastikan performa tetap cepat meskipun data master berisi ribuan baris.
+-   **Manajemen Stok Real-time**: Stok obat di dropdown diperbarui secara dinamis berdasarkan item yang sudah ada di draft.
+-   **Validasi Stok**: Aplikasi secara otomatis mencegah penambahan obat jika jumlah yang diminta melebihi stok yang tersedia.
+-   **Simpan & Kurangi Stok**: Saat resep disimpan, stok obat di database akan berkurang secara otomatis dalam satu transaksi yang aman.
+-   **Cetak ke PDF**: Resep digital dapat dicetak ke dalam format PDF dengan layout yang profesional.
+-   **Error Handling & Logging**: Dilengkapi dengan penanganan error dan pencatatan log yang informatif.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Prasyarat (Requirements)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Sebelum memulai, pastikan sistem memenuhi persyaratan berikut:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+-   **PHP 8.2 atau lebih tinggi**
+-   **Composer 2.x**
+-   Web Server (misalnya, Laragon, XAMPP)
+-   Database MySQL
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🚀 Panduan Instalasi Cepat
 
-### Premium Partners
+Berikut adalah langkah-langkah untuk menjalankan aplikasi ini secara lokal.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 1. Clone Repository
 
-## Contributing
+Buka terminal dan clone repository ini ke direktori lokal .
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+git clone https://github.com/synchhans/test-sipatex-eresep.git
+```
 
-## Code of Conduct
+### 2. Masuk ke Direktori Proyek
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Pindah ke direktori proyek yang baru saja dibuat.
 
-## Security Vulnerabilities
+```bash
+cd test-sipatex-eresep
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 3. Install Dependency PHP
 
-## License
+Install semua paket PHP yang dibutuhkan melalui Composer.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+composer i
+```
+
+### 4. Konfigurasi Environment
+
+Salin file `.env.example` menjadi file `.env` baru.
+
+Buka file `.env` dan sesuaikan konfigurasi database dengan lokal komputer anda, terutama `DB_USERNAME`, dan `DB_PASSWORD`, default nya seperti ini.
+
+**Konfigurasi `.env`:**
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=sipatex_eresep
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### 5. Generate Application Key
+
+Buat kunci enkripsi unik untuk aplikasi Laravel .
+
+```bash
+php artisan key:generate
+```
+
+### 6. Migrasi Database
+
+Jalankan migrasi untuk membuat tabel-tabel yang diperlukan oleh aplikasi (`resep`, `resep_item`, `resep_racikan_item`).
+
+```bash
+php artisan migrate
+```
+
+> **Catatan**: Jika database `sipatex_eresep` belum ada, Artisan akan menanyakan apakah ingin membuatnya. Pilih **Yes**.
+
+### 7. Import Data Master (Langkah Penting!)
+
+Aplikasi ini membutuhkan dua tabel master yang datanya sudah disediakan. ** harus mengimpornya secara manual** melalui tool database (misalnya, phpMyAdmin, HeidiSQL, TablePlus).
+
+-   Buka phpMyAdmin dan pilih database `sipatex_eresep`.
+-   Klik tab **Import**.
+-   Pilih dan impor file `database/sql/obatalkes_m.sql`.
+-   Ulangi proses, pilih dan impor file `database/sql/signa_m.sql`.
+
+Setelah langkah ini, akan memiliki 5 tabel di database : `obatalkes_m`, `signa_m`, `resep`, `resep_item`, dan `resep_racikan_item`.
+
+### 8. Jalankan Server Development
+
+Sekarang, siap menjalankan aplikasi!
+
+```bash
+php artisan serve
+```
+
+Aplikasi akan tersedia di **http://127.0.0.1:8000**. Buka URL tersebut di browser .
+
+---
+
+## Teknologi yang Digunakan
+
+-   **Backend**: PHP 8.2, Laravel 12
+-   **Frontend**: TailwindCSS (via CDN)
+-   **JavaScript**: Vanilla JS, Choices.js (untuk select searchable)
+-   **Database**: MySQL
+-   **PDF Generation**: `barryvdh/laravel-dompdf`
+
+---
